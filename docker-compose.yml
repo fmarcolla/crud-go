@@ -1,0 +1,28 @@
+version: '3'
+services:
+  crud-go:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      - MONGODB_URL=mongodb://localhost:27017
+      - MONGODB_NAME=crud-go
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - meu_crud_network
+
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - meu_crud_network
+
+networks:
+  meu_crud_network:
